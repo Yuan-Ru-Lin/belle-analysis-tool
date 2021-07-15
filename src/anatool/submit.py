@@ -82,8 +82,6 @@ if __name__ == '__main__':
     parser.add_argument('--dry-run', dest='out', action='store_const', const=print, default=os.system)
     args = parser.parse_args()
 
-    logs = pathlib.Path('./logs'); logs.mkdir(exist_ok=True)
-
     for url in url_list(data=args.data):
         args.out(f'bsub -q {args.queue} {args.steering} {url}')
 
