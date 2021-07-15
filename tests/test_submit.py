@@ -1,9 +1,32 @@
 import os
 import unittest
-from anatool.submit_parse import SubmitInfo
+from anatool.submit import run_list, url_list, SubmitInfo
 
 
-class TestSubmitParse(unittest.TestCase):
+class TestSubmitter(unittest.TestCase):
+
+    def test_run_list(self):
+        runs_gen = run_list()
+        self.assertEqual(next(runs_gen).__str__(), 'ex=7&rs=6&re=872')
+
+    def test_url_list_mc(self):
+        submit = url_list(data=False)
+        self.assertEqual(next(submit),
+            'http://bweb3/montecarlo.php?ex=7&rs=6&re=872&ty=evtgen-uds&dt=on_resonance&bl=caseB&st=10')
+        for i in range(2000): next(submit)
+        self.assertEqual(next(submit),
+            'http://bweb3/montecarlo.php?ex=51&rs=1725&re=1756&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=0')
+
+    def test_url_list_data(self):
+        submit = url_list(data=True)
+        self.assertEqual(next(submit),
+            'http://bweb3/mdst.php?ex=7&rs=6&re=872&skm=HadronB&dt=on_resonance&bl=caseB')
+        for i in range(499): next(submit)
+        self.assertEqual(next(submit),
+            'http://bweb3/mdst.php?ex=51&rs=1725&re=1756&skm=HadronBJ&dt=on_resonance&bl=caseB')
+
+
+class TestSubmitInfo(unittest.TestCase):
 
     def test_default_submit(self):
         info = SubmitInfo()
