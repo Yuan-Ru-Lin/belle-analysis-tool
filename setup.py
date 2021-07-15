@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="anatool",
-    version="1.0.0",
+    version="1.0.1",
     author="Yuan-Ru Lin",
     author_email="yuanrulin.tw@gmail.com",
     description="A package that helps you do analysis for Belle or Belle II",

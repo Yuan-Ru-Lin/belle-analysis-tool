@@ -1,2 +1,2 @@
 include README.md
-include data/*.dat
+include src/anatool/data/*.dat
