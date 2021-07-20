@@ -1,4 +1,5 @@
 import os
+import subprocess
 import csv
 import pathlib
 import urllib
@@ -79,9 +80,9 @@ if __name__ == '__main__':
     parser.add_argument('--outputDir', default='.')
     parser.add_argument('--queue', default='s')
     parser.add_argument('--data', action='store_true', default=False)
-    parser.add_argument('--dry-run', dest='out', action='store_const', const=print, default=os.system)
+    parser.add_argument('--dry-run', dest='out', action='store_const', const=print, default=subprocess.run)
     args = parser.parse_args()
 
     for url in url_list(data=args.data):
-        args.out(f'bsub -q {args.queue} {args.steering} {url} --arg --outputDir {args.outputDir}')
+        args.out(f'bsub -q {args.queue} {args.steering} -- --path {url} --outputDir {args.outputDir}'.split())
 
