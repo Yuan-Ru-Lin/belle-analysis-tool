@@ -83,5 +83,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for url in url_list(data=args.data):
-        args.out(f'bsub -q {args.queue} {args.steering} {url}')
+        args.out(f'bsub -q {args.queue} {args.steering} {url} --arg --outputDir {args.outputDir}')
 
