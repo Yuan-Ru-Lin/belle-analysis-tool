@@ -17,10 +17,12 @@ def url_list(
         dataType='on_resonance',
         eventTypes=['evtgen-uds', 'evtgen-charm', 'evtgen-charged', 'evtgen-mixed'],
         stream_cardinal=0,
+        exs=None,
         data=False,
     ):
     for runs in run_list():
         ex = int(urllib.parse.parse_qs(runs)['ex'][0])
+        if exs and ex not in exs: continue
         if data:
             skim = 'HadronB'  if ex < 20 else 'HadronBJ'
             yield f'http://bweb3/mdst.php?{runs}&skm={skim}&dt={dataType}&bl=caseB'
@@ -80,9 +82,11 @@ if __name__ == '__main__':
     parser.add_argument('--outputDir', default='.')
     parser.add_argument('--queue', default='s')
     parser.add_argument('--data', action='store_true', default=False)
+    parser.add_argument('--eventTypes', nargs='+', default=['evtgen-uds', 'evtgen-charm', 'evtgen-charged', 'evtgen-mixed'])
+    parser.add_argument('--exs', nargs='+', default=None, type=int)
     parser.add_argument('--dry-run', dest='out', action='store_const', const=print, default=subprocess.run)
     args = parser.parse_args()
 
-    for url in url_list(data=args.data):
+    for url in url_list(data=args.data, eventTypes=args.eventTypes, exs=args.exs):
         args.out(f'bsub -q {args.queue} {args.steering} -- --path {url} --outputDir {args.outputDir}'.split())
 

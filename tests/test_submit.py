@@ -25,6 +25,10 @@ class TestSubmitter(unittest.TestCase):
         self.assertEqual(next(submit),
             'http://bweb3/mdst.php?ex=51&rs=1725&re=1756&skm=HadronBJ&dt=on_resonance&bl=caseB')
 
+    def test_pick_certain_experiments(self):
+        submit = url_list(exs=[21])
+        self.assertEqual(next(submit), 'http://bweb3/montecarlo.php?ex=21&rs=2&re=96&ty=evtgen-uds&dt=on_resonance&bl=caseB&st=10'),
+
 
 class TestSubmitInfo(unittest.TestCase):
 
