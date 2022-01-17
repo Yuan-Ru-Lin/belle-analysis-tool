@@ -1,6 +1,6 @@
 import unittest
 import ROOT
-from plotting import Uploader
+from anatool.plotting import Uploader
 import numpy as np
 import matplotlib.pyplot as plt
 
