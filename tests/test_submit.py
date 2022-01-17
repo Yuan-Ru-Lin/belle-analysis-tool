@@ -50,7 +50,7 @@ class TestSubmitInfo(unittest.TestCase):
         )
 
     def test_submit_for_custom_files(self):
-        info = SubmitInfo('--path /self/generated/mdst/s0/e9/data1.mdst /self/generated/mdst/s0/e9/data2.mdst --suffix my_suffix')
+        info = SubmitInfo('--path yourSimulation/s0/e9/data1.mdst yourSimulation/s0/e9/data2.mdst --suffix my_suffix')
         self.assertEqual(
             (
                 info.url,
@@ -59,15 +59,15 @@ class TestSubmitInfo(unittest.TestCase):
                 info.outputname,
             ),
             (
-                ['/self/generated/mdst/s0/e9/data1.mdst', '/self/generated/mdst/s0/e9/data2.mdst'],
+                ['yourSimulation/s0/e9/data1.mdst', 'yourSimulation/s0/e9/data2.mdst'],
                 True,
                 True,
-                os.getcwd() + '/s0_e9_my_suffix.root',
+                os.getcwd() + '/yourSimulation_s0_e9_my_suffix.root',
             )
         )
 
     def test_submit_for_mc(self):
-        info = SubmitInfo('--path http://bweb3/montecarlo.php?ex=55&rs=1096&re=1136&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=1')
+        info = SubmitInfo('--path http://bweb3/montecarlo.php?ex=55&rs=1096&re=1136&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=1 --suffix my_suffix')
         self.assertEqual(
             (
                 info.url,
@@ -79,12 +79,12 @@ class TestSubmitInfo(unittest.TestCase):
                 'http://bweb3/montecarlo.php?ex=55&rs=1096&re=1136&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=1',
                 True,
                 False,
-                os.getcwd() + '/55_1096_1136_evtgen-charm_on_resonance_caseB_1.root',
+                os.getcwd() + '/55_1096_1136_evtgen-charm_on_resonance_caseB_1_my_suffix.root',
             )
         )
 
     def test_submit_for_data(self):
-        info = SubmitInfo('--path http://bweb3/mdst.php?ex=55&rs=1096&re=1136&skm=HadronBJ&dt=on_resonance&bl=caseB')
+        info = SubmitInfo('--path http://bweb3/mdst.php?ex=55&rs=1096&re=1136&skm=HadronBJ&dt=on_resonance&bl=caseB --suffix my_suffix')
         self.assertEqual(
             (
                 info.url,
@@ -96,7 +96,7 @@ class TestSubmitInfo(unittest.TestCase):
                 'http://bweb3/mdst.php?ex=55&rs=1096&re=1136&skm=HadronBJ&dt=on_resonance&bl=caseB',
                 False,
                 False,
-                os.getcwd() + '/55_1096_1136_HadronBJ_on_resonance_caseB.root',
+                os.getcwd() + '/55_1096_1136_HadronBJ_on_resonance_caseB_my_suffix.root',
             )
         )
 

@@ -60,8 +60,9 @@ class SubmitInfo:
     @property
     def outputname(self):
         directory = self.output_directory_path.absolute().as_posix()
-        labels = (self.args.path[0].split('/')[-3:-1] + [self.args.suffix] if self.isCustomFile
+        labels = (self.args.path[0].strip('.mdst').split('/')[:-1] if self.isCustomFile
                 else [value[0] for value in urllib.parse.parse_qs(self._parse_result.query).values()])
+        if self.args.suffix: labels.extend([self.args.suffix])
         basename = '_'.join(labels)
         return f'{directory}/{basename}.root'
 
