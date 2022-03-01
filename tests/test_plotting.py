@@ -1,11 +1,14 @@
 import unittest
-import ROOT
-from anatool.plotting import Uploader
-import numpy as np
-import matplotlib.pyplot as plt
 
 
+@unittest.skip('Not covered in dev')
 class TestUploader(unittest.TestCase):
+
+    def setUp(self):
+        import ROOT
+        from anatool.plotting import Uploader
+        import numpy as np
+        import matplotlib.pyplot as plt
 
     def test_upload_one_figure(self):
         u = Uploader()
