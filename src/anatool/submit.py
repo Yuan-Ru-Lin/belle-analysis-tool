@@ -86,8 +86,9 @@ if __name__ == '__main__':
     parser.add_argument('--eventTypes', nargs='+', default=['evtgen-uds', 'evtgen-charm', 'evtgen-charged', 'evtgen-mixed'])
     parser.add_argument('--exs', nargs='+', default=None, type=int)
     parser.add_argument('--dry-run', dest='out', action='store_const', const=print, default=subprocess.run)
+    parser.add_argument('--suffix', default='')
     args = parser.parse_args()
 
     for url in url_list(data=args.data, eventTypes=args.eventTypes, exs=args.exs):
-        args.out(f'bsub -q {args.queue} {args.steering} -- --path {url} --outputDir {args.outputDir}'.split())
+        args.out(f'bsub -q {args.queue} {args.steering} -- --path {url} --suffix {args.suffix} --outputDir {args.outputDir}'.split())
 
