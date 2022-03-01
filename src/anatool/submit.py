@@ -90,5 +90,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for url in url_list(data=args.data, eventTypes=args.eventTypes, exs=args.exs):
-        args.out(f'bsub -q {args.queue} {args.steering} -- --path {url} --suffix {args.suffix} --outputDir {args.outputDir}'.split())
+        args.out(f'bsub -q {args.queue} {args.steering} --path {url} --suffix {args.suffix} --outputDir {args.outputDir}'.split())
 
