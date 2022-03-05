@@ -1,3 +1,5 @@
+import pkgutil
+from io import StringIO
 import os
 import subprocess
 import csv
@@ -7,7 +9,7 @@ import argparse
 
 
 def run_list(dataType='on_resonance'):
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f'data/{dataType}.dat')) as f:
+    with StringIO(pkgutil.get_data(__package__, f'data/{dataType}.dat').decode()) as f:
         reader = csv.DictReader(f)
         for row in reader:
             yield urllib.parse.urlencode(row)
