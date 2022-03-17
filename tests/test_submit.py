@@ -1,6 +1,6 @@
 import os
 import unittest
-from anatool.submit import run_list, url_list, SubmitInfo
+from anatool.submit import run_list, url_list, convert_to_stem
 
 
 class TestSubmitter(unittest.TestCase):
@@ -29,74 +29,7 @@ class TestSubmitter(unittest.TestCase):
         submit = url_list(exs=[21])
         self.assertEqual(next(submit), 'http://bweb3/montecarlo.php?ex=21&rs=2&re=96&ty=evtgen-uds&dt=on_resonance&bl=caseB&st=10'),
 
-
-class TestSubmitInfo(unittest.TestCase):
-
-    def test_default_submit(self):
-        info = SubmitInfo()
-        self.assertEqual(
-            (
-                info.url,
-                info.isMC,
-                info.isCustomFile,
-                info.outputname,
-            ),
-            (
-                'http://bweb3/montecarlo.php?ex=55&rs=990&re=1093&ty=evtgen-uds&dt=on_resonance&bl=caseB&st=0',
-                True,
-                False,
-                os.getcwd() + '/55_990_1093_evtgen-uds_on_resonance_caseB_0.root',
-            )
-        )
-
-    def test_submit_for_custom_files(self):
-        info = SubmitInfo('--path yourSimulation/s0/e9/data1.mdst yourSimulation/s0/e9/data2.mdst --suffix my_suffix')
-        self.assertEqual(
-            (
-                info.url,
-                info.isMC,
-                info.isCustomFile,
-                info.outputname,
-            ),
-            (
-                ['yourSimulation/s0/e9/data1.mdst', 'yourSimulation/s0/e9/data2.mdst'],
-                True,
-                True,
-                os.getcwd() + '/yourSimulation_s0_e9_my_suffix.root',
-            )
-        )
-
-    def test_submit_for_mc(self):
-        info = SubmitInfo('--path http://bweb3/montecarlo.php?ex=55&rs=1096&re=1136&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=1 --suffix my_suffix')
-        self.assertEqual(
-            (
-                info.url,
-                info.isMC,
-                info.isCustomFile,
-                info.outputname,
-            ),
-            (
-                'http://bweb3/montecarlo.php?ex=55&rs=1096&re=1136&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=1',
-                True,
-                False,
-                os.getcwd() + '/55_1096_1136_evtgen-charm_on_resonance_caseB_1_my_suffix.root',
-            )
-        )
-
-    def test_submit_for_data(self):
-        info = SubmitInfo('--path http://bweb3/mdst.php?ex=55&rs=1096&re=1136&skm=HadronBJ&dt=on_resonance&bl=caseB --suffix my_suffix')
-        self.assertEqual(
-            (
-                info.url,
-                info.isMC,
-                info.isCustomFile,
-                info.outputname,
-            ),
-            (
-                'http://bweb3/mdst.php?ex=55&rs=1096&re=1136&skm=HadronBJ&dt=on_resonance&bl=caseB',
-                False,
-                False,
-                os.getcwd() + '/55_1096_1136_HadronBJ_on_resonance_caseB_my_suffix.root',
-            )
-        )
+    def test_convert_to_stem(self):
+        url = 'http://bweb3/montecarlo.php?ex=51&rs=1725&re=1756&ty=evtgen-charm&dt=on_resonance&bl=caseB&st=0'
+        self.assertEqual(convert_to_stem(url), '51_1725_1756_evtgen-charm_on_resonance_caseB_0')
 
