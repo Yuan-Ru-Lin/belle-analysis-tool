@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="belle-analysis-tool",
-    version="1.2.1",
+    version="1.3.0",
     author="Yuan-Ru Lin",
     author_email="yuanrulin.tw@gmail.com",
     description="A package that helps you do analysis for Belle or Belle II",
